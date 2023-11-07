@@ -85,7 +85,7 @@ public class MazeGenerator : MonoBehaviour
     private void Start()
     {
         GenerateMaze(mazeRows, mazeColumns);
-        player.transform.parent = mazeParent.transform;
+        //player.transform.parent = mazeParent.transform;
         int posPlayer = Random.Range(0, mazeRows * mazeColumns - 1);
         GameObject go = mazeParent.transform.GetChild(posPlayer).gameObject;
         player.transform.position = go.transform.position;

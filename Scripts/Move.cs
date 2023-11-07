@@ -1,22 +1,35 @@
-using Unity.Android.Types;
-using UnityEditor;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    [Header("Move values:")]
+    [Tooltip("Do not make this value to heigh. " +
+        "This will result in a heigh moving speed.")]
     public float speed = 0.05f; // Speed of the movement
+    [Tooltip("This is the Rigidbody of the player. ")]
+    [SerializeField]
     public Rigidbody2D rb; // Reference to the Rigidbody component
+    [Tooltip("This is the canvas of the exitscreen. ")]
+    [SerializeField]
+    public GameObject canvas; // Reference to the Canvas Object
+    [Tooltip("This is the text items in the exitscreen. ")]
+    [SerializeField]
+    public GameObject text; // Reference to the text Object
+
     // Start is called before the first frame update
     void Start()
     {
         // Get the Rigidbody component attached to this GameObject
         rb = GetComponent<Rigidbody2D>();
+        canvas.gameObject.SetActive(false);
+        if (!Debug.isDebugBuild) speed *= 2;
     }
 
-    // FixedUpdate is called at a fixed interval and is used for regular updates such as adjusting physics (rigidbody) objects.
-    void Update()   // Can be Update, thats called once per frame
+    // Update is called at a fixed interval and is used for regular updates such as adjusting physics (rigidbody) objects.
+    void Update()
     {
-        //Vector2 movement = new Vector2(0.0f, 0.0f); ;
         Vector2 currentPos = rb.position;
         // Get input from the keyboard
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -48,8 +61,9 @@ public class Move : MonoBehaviour
                 timeUnit = " minutes";
                 time = Time.timeSinceLevelLoad / 60;
             }
-            EditorUtility.DisplayDialog("Done", "You found the exit in " + Mathf.Round(time * 10.0f) * 0.1f + timeUnit, "Done");
-            Application.Quit();
+            TextMeshProUGUI mText = text.GetComponent<TextMeshProUGUI>();
+            mText.text = "You found the exit in " + Mathf.Round(time * 10.0f) * 0.1f + timeUnit;
+            canvas.gameObject.SetActive(true);
         }
     }
 }
