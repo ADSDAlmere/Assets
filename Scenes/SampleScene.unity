@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeRows: 10
-  mazeColumns: 20
+  mazeColumns: 16
   cellPrefab: {fileID: 328620328}
   player: {fileID: 323873465}
   disableCellSprite: 0
